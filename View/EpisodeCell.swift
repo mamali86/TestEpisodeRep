@@ -11,6 +11,8 @@ import UIKit
 class EpisodeCell: UICollectionViewCell {
     
 //    var episodeDetails = [EpisodeDetails]()
+    var epsiodeDetails = [EpisodeDetails]()
+
 
     var hasLiked: Bool = false
 
@@ -28,20 +30,10 @@ class EpisodeCell: UICollectionViewCell {
         
         didSet {
                  episodeSynopsisLabel.text = "\(episodeDetails?.title ?? "Episode Category") / \(episodeDetails?.title ?? "Episode Year") / \(episodeDetails?.title ?? "Episode Duration")"
-            
+
         }
         
     }
-    
-//
-//    fileprivate func fetchEpisodeDetails(){
-//
-//        guard let content_URL = episode.content_url else {return}
-//        ConfigApiManager.sharedIntance.fetchEpisoideDetails(content_URL: content_URL) { (episodeDetails) in
-//            self.episodeDetails = episodeDetails
-//
-//        }
-//    }
     
 
     
@@ -99,7 +91,7 @@ class EpisodeCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+                
         backgroundColor = UIColor.init(red: 169/255, green: 169/255, blue: 169/255, alpha: 0.7)
         
         addSubview(episodeImage)

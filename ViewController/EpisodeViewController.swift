@@ -36,12 +36,11 @@ class EpisodeViewController: UICollectionViewController, UICollectionViewDelegat
         }
     }
 
-     func fetchEpisodeDetails(for cell: EpisodeCell){
+      func fetchEpisodeDetails(for cell: EpisodeCell){
 
         guard let indexPath = collectionView?.indexPath(for: cell) else {return}
-
         guard let content_URL = cell.episode.content_url else {return}
-        ConfigApiManager.sharedIntance.fetchEpisoideDetails(content_URL: content_URL) { (episodeDetails) in
+        ConfigApiManager.sharedIntance.fetchEpisodeDetails(content_URL: content_URL) { (episodeDetails) in
             self.epsiodeDetails = episodeDetails
 
             cell.episodeDetails = self.epsiodeDetails[indexPath.item]
@@ -49,7 +48,6 @@ class EpisodeViewController: UICollectionViewController, UICollectionViewDelegat
     }
     
 
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return episodes.count
     }
@@ -61,8 +59,8 @@ class EpisodeViewController: UICollectionViewController, UICollectionViewDelegat
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! EpisodeCell
          cell.episode = self.episodes[indexPath.item]
-
-//        fetchEpisodeDetails(for: cell)
+        fetchEpisodeDetails(for: cell)
+//        cell.episode = self.epsiodeDetails[indexPath.item]
         return cell
     }
     

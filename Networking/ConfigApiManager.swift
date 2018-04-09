@@ -15,7 +15,7 @@ class ConfigApiManager: NSObject {
     static let sharedIntance = ConfigApiManager()
 
     
-    func fetchEpisoideDetails(content_URL: String, completionHandler: @escaping ([EpisodeDetails]) -> ()) {
+    func fetchEpisodeDetails(content_URL: String, completionHandler: @escaping ([EpisodeDetails]) -> ()) {
         
         var jsonUrlString: String?
         
@@ -42,22 +42,25 @@ class ConfigApiManager: NSObject {
                 print("ERROR: didn't get a string in the response")
                 return
             }
+//
+//            let leadingCharactersToTrim = CharacterSet(charactersIn: "/").union(.whitespacesAndNewlines)
+//            let trimmedString = responseString.trimmingCharacters(in: leadingCharactersToTrim)
+//            let finalData = trimmedString.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+//            guard let data = finalData.data(using: .utf8) else {return}
             
-            let leadingCharactersToTrim = CharacterSet(charactersIn: "/").union(.whitespacesAndNewlines)
-            let trimmedString = responseString.trimmingCharacters(in: leadingCharactersToTrim)
-            let finalData = trimmedString.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
-//            print(finalData)
-            let data = finalData.data(using: .utf8)
-            
+            guard let data = dataResponse.data else {return}
+
+
             do {
                 
-                if JSONSerialization.isValidJSONObject(data!) {
+                if JSONSerialization.isValidJSONObject(data) {
                     print("Valid Json")
                 } else {
                     print("InValid Json")
                 }
                 
-                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments)
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                print(json)
                 guard let episodeDetailDictionaries = json as? [[String: Any]] else {return}
                 
                 var episodeDetails = [EpisodeDetails]()
