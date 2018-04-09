@@ -22,7 +22,7 @@ class EpisodeViewController: UICollectionViewController, UICollectionViewDelegat
         navigationController?.isNavigationBarHidden = true
         collectionView?.register(EpisodeCell.self, forCellWithReuseIdentifier: cellID)
         setupEpisodes()
-//        fetchEpisodeDetails(for: EpisodeCell)
+        fetchEpisodeDetails(for: EpisodeCell)
     }
     
     
