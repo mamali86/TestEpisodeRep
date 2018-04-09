@@ -10,7 +10,7 @@ import UIKit
 
 class EpisodeCell: UICollectionViewCell {
     
-    var episodeDetails = [EpisodeDetails]()
+//    var episodeDetails = [EpisodeDetails]()
 
     var hasLiked: Bool = false
 
@@ -19,20 +19,29 @@ class EpisodeCell: UICollectionViewCell {
         didSet{
             
             episodeTitleLabel.text = episode?.content_type
-            episodeSynopsisLabel.text = "\(episode?.heading ?? "Episode Category") / \(episode?.heading ?? "Episode Year") / \(episode?.heading ?? "Episode Duration")"
-            
-        }
+       
+                }
     }
     
     
-    fileprivate func fetchEpisodeDetails(){
+      var episodeDetails: EpisodeDetails! {
         
-        guard let content_URL = episode.content_url else {return}
-        ConfigApiManager.sharedIntance.fetchEpisoideDetails(content_URL: content_URL) { (episodeDetails) in
-            self.episodeDetails = episodeDetails
+        didSet {
+                 episodeSynopsisLabel.text = "\(episodeDetails?.title ?? "Episode Category") / \(episodeDetails?.title ?? "Episode Year") / \(episodeDetails?.title ?? "Episode Duration")"
             
         }
+        
     }
+    
+//
+//    fileprivate func fetchEpisodeDetails(){
+//
+//        guard let content_URL = episode.content_url else {return}
+//        ConfigApiManager.sharedIntance.fetchEpisoideDetails(content_URL: content_URL) { (episodeDetails) in
+//            self.episodeDetails = episodeDetails
+//
+//        }
+//    }
     
 
     

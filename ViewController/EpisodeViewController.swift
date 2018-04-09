@@ -22,6 +22,7 @@ class EpisodeViewController: UICollectionViewController, UICollectionViewDelegat
         navigationController?.isNavigationBarHidden = true
         collectionView?.register(EpisodeCell.self, forCellWithReuseIdentifier: cellID)
         setupEpisodes()
+//        fetchEpisodeDetails(for: EpisodeCell)
     }
     
     
@@ -29,13 +30,26 @@ class EpisodeViewController: UICollectionViewController, UICollectionViewDelegat
     
         ConfigApiManager.sharedIntance.fetchEpisodes { (episodes) in
             DispatchQueue.main.async {
-
             self.episodes = episodes
             self.collectionView?.reloadData()
         }
         }
     }
 
+     func fetchEpisodeDetails(for cell: EpisodeCell){
+
+        guard let indexPath = collectionView?.indexPath(for: cell) else {return}
+
+        guard let content_URL = cell.episode.content_url else {return}
+        ConfigApiManager.sharedIntance.fetchEpisoideDetails(content_URL: content_URL) { (episodeDetails) in
+            self.epsiodeDetails = episodeDetails
+
+            cell.episodeDetails = self.epsiodeDetails[indexPath.item]
+        }
+    }
+    
+
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return episodes.count
     }
@@ -47,6 +61,8 @@ class EpisodeViewController: UICollectionViewController, UICollectionViewDelegat
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! EpisodeCell
          cell.episode = self.episodes[indexPath.item]
+
+//        fetchEpisodeDetails(for: cell)
         return cell
     }
     

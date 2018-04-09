@@ -21,7 +21,7 @@ class EpisodeDetails {
     
     init(dictionary :[String: Any]) {
         
-        self.title = dictionary["account_url"] as? String ?? "Episode Title"
+        self.title = dictionary["title"] as? String ?? "Episode Title"
 //        self.language_modified_by = dictionary["language_modified_by"] as? String ?? ""
 //        self.number_of_views = dictionary["number_of_views"] as? NSNumber
     }

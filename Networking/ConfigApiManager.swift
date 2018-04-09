@@ -17,8 +17,18 @@ class ConfigApiManager: NSObject {
     
     func fetchEpisoideDetails(content_URL: String, completionHandler: @escaping ([EpisodeDetails]) -> ()) {
         
-        let jsonUrlString = "http://feature-code-test.skylark-cms.qa.aws.ostmodern.co.uk:8000" + content_URL + "items/"
-        guard let url = URL(string: jsonUrlString) else {return}
+        var jsonUrlString: String?
+        
+        if content_URL.contains("dividers") {
+            
+            jsonUrlString = "http://feature-code-test.skylark-cms.qa.aws.ostmodern.co.uk:8000" + content_URL
+        } else {
+            
+            jsonUrlString = "http://feature-code-test.skylark-cms.qa.aws.ostmodern.co.uk:8000" + content_URL + "items/"
+        }
+        
+      
+        guard let url = URL(string: jsonUrlString ?? "") else {return}
         let headers = [
             "Content-Type": "application/json"
         ]
@@ -36,12 +46,12 @@ class ConfigApiManager: NSObject {
             let leadingCharactersToTrim = CharacterSet(charactersIn: "/").union(.whitespacesAndNewlines)
             let trimmedString = responseString.trimmingCharacters(in: leadingCharactersToTrim)
             let finalData = trimmedString.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
-            print(finalData)
+//            print(finalData)
             let data = finalData.data(using: .utf8)
             
             do {
                 
-                if JSONSerialization.isValidJSONObject(data) {
+                if JSONSerialization.isValidJSONObject(data!) {
                     print("Valid Json")
                 } else {
                     print("InValid Json")
@@ -88,7 +98,9 @@ class ConfigApiManager: NSObject {
     
     do {
     let homeSetOutput = try JSONDecoder().decode(HomeOutput.self, from: data)
+        
         completionHandler(homeSetOutput.objects)
+        
     
     } catch let decodeError {
     print("Failed to parse JSON properly:", decodeError)
