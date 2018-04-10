@@ -45,6 +45,21 @@ class EpisodeDetailViewController: UIViewController {
             navigationItem.title = "Epiosde Details"
             episodeTitleLabel.text = episode?.content_type
             episodeSynopsisLabel.text = "\(episode?.heading ?? "Episode Category") / \(episode?.heading ?? "Episode Year") / \(episode?.heading ?? "Episode Duration")"
+            fetchEpisodeDetails(for: episode)
+            
+    
+
+        }
+    }
+    
+    
+    func fetchEpisodeDetails(for episode: Episode?){
+        
+        guard let content_URL = episode?.content_url else {return}
+        ConfigApiManager.sharedIntance.fetchEpisodeDetails(content_URL: content_URL) { [weak self] (episodeDetails) in
+            guard let details = episodeDetails.first else { return }
+            self?.episodeTitleLabel.text = details.title
+            self?.episodeSynopsisLabel.text = "\(episode?.heading ?? "Episode Category") / \(episode?.heading ?? "Episode Year") / \(episode?.heading ?? "Episode Duration")"
         }
     }
     
