@@ -58,7 +58,7 @@ class EpisodeDetailViewController: UIViewController {
         guard let content_URL = episode?.content_url else {return}
         ConfigApiManager.sharedIntance.fetchEpisodeDetails(content_URL: content_URL) { [weak self] (episodeDetails) in
             guard let details = episodeDetails.first else { return }
-            self?.episodeTitleLabel.text = details.title
+//            self?.episodeTitleLabel.text = details.title
             self?.episodeSynopsisLabel.text = "\(episode?.heading ?? "Episode Category") / \(episode?.heading ?? "Episode Year") / \(episode?.heading ?? "Episode Duration")"
         }
     }
