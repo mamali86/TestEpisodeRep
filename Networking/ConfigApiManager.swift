@@ -48,19 +48,21 @@ class ConfigApiManager: NSObject {
 //            let finalData = trimmedString.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
 //            guard let data = finalData.data(using: .utf8) else {return}
             
-            guard let data = dataResponse.data else {return}
+            guard let strData = responseString.data(using: .utf8, allowLossyConversion: false) else {return}
+
+            
+//            guard let data = dataResponse.data else {return}
 
 
             do {
                 
-                if JSONSerialization.isValidJSONObject(data) {
-                    print("Valid Json")
-                } else {
-                    print("InValid Json")
-                }
+//                if JSONSerialization.isValidJSONObject(strData) {
+//                    print("Valid Json")
+//                } else {
+//                    print("InValid Json")
+//                }
                 
-                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-//                print(json)
+                let json = try JSONSerialization.jsonObject(with: strData, options: .allowFragments)
                 guard let episodeDetailDictionaries = json as? [[String: Any]] else {return}
                 
                 var episodeDetails = [EpisodeDetails]()
